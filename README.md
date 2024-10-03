@@ -444,11 +444,22 @@ Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buat
 5. ``service bind9 restart``
 
 #### Console Albert Einstein
-6. ``ping log.panah.pasopati.it38.com``
+6. ``ping log.panah.pasopati.it38.com`` <br>
 ![image](https://github.com/user-attachments/assets/98c030f1-169a-4f40-9378-4fe000ce7a3e)
 
 ## Soal 11
 Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
+1. ``Hapus line nameserver 192.168.122.1 di /etc/resolv.conf di salah satu nodes kecuali Majapahit dan Nusantara``
+
+#### Console Majapahit
+2. ``cd /etc/bind``
+3. ``nano named.conf.options`` <br>
+![image](https://github.com/user-attachments/assets/ce2bec9a-99a8-4246-8522-5cf3945e9001)
+4. ``service bind9 restart``
+
+#### Console Bebas (tidak ada nameserver 192.168.122.1)
+5. ``ping x.com`` <br>
+![image](https://github.com/user-attachments/assets/31f21664-77d2-4ad2-924a-18db914bcfde)
 
 ## Soal 12
 Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
