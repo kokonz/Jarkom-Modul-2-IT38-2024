@@ -119,9 +119,42 @@ Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya me
 
 ## Soal 2
 Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
+#### Masuk ke console Sriwijaya
+1. ``apt update && apt install bind9 dnsutils -y``
+2. ``cd /etc/bind``
+3. ``nano named.conf.local``
+   ```bash
+   zone "sudarsana.it38.com" {
+       type master;
+   file "/etc/bind/it38/sudarsana.it38.com";
+   };
+4. mkdir it38
+5. cd it38
+6. cp ../db.local sudarsana.it38.com
+7. nano sudarsana.it38.com
+   ```bash
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     pasopati.it38.com. root.pasopati.it38.com. (
+                                  2         ; Serial
+                             604800         ; Refresh
+                              86400         ; Retry
+                            2419200         ; Expire
+                             604800 )       ; Negative Cache TTL
+    ;
+    @       IN      NS      pasopati.it38.com.
+    @       IN      A       10.82.2.5
+    @       IN      AAAA    ::1
+    www     IN      CNAME   pasopati.it38.com.
+8. service bind9 restart
+9. ping www.pasopati.it38.com
+    ![image](https://github.com/user-attachments/assets/26165bf3-e3f2-4fe6-b4a3-b23eec8e2731)
 
 ## Soal 3
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
+
 
 ## Soal 4
 Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
