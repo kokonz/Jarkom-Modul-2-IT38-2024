@@ -5,7 +5,7 @@
 ### Randist Prawanda Putra (5027231059)
 <hr>
 
-## Topologi Kelompok IT38 (2)
+## Topologi (2)
 ![image](https://github.com/user-attachments/assets/7a25912d-792d-476d-bc68-7a9baf9f870b)
 
 # Soal
