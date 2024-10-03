@@ -182,7 +182,7 @@ Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibut
                              604800 )       ; Negative Cache TTL
     ;
     @       IN      NS      pasopati.it38.com.
-    @       IN      A       10.82.2.3
+    @       IN      A       10.82.2.5
     @       IN      AAAA    ::1
     www     IN      CNAME   pasopati.it38.com.
 5. service bind9 restart
@@ -191,6 +191,45 @@ Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibut
 
 ## Soal 4
 Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
+#### Masuk ke console Sriwijaya
+1. ``cd /etc/bind``
+2. ``nano named.conf.local``
+    ```
+   zone "sudarsana.it38.com" {
+      type master;
+      file "/etc/bind/it38/sudarsana.it38.com";
+    };
+    
+    zone "pasopati.it38.com" {
+      type master;
+      file "/etc/bind/it38/pasopati.it38.com";
+    };
+
+    zone "rujapala.it38.com" {
+      type master;
+      file "/etc/bind/it38/rujapala.it38.com";
+    };
+3. cd it38
+4. nano rujapala.it38.com
+    ```
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     rujapala.it38.com. root.rujapala.it38.com. (
+                                  2         ; Serial
+                             604800         ; Refresh
+                              86400         ; Retry
+                            2419200         ; Expire
+                             604800 )       ; Negative Cache TTL
+    ;
+    @       IN      NS      rujapala.it38.com.
+    @       IN      A       10.82.2.3
+    @       IN      AAAA    ::1
+    www     IN      CNAME   rujapala.it38.com.
+5. service bind9 restart
+6. ping rujapala.it38.com <br>
+![image](https://github.com/user-attachments/assets/96c27360-9961-4e28-8926-a5c78d72324a)
 
 ## Soal 5
 Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
