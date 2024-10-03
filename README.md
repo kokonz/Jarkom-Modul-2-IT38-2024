@@ -119,7 +119,7 @@ Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya me
 
 ## Soal 2
 Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
-#### Masuk ke console Sriwijaya
+#### Console Sriwijaya
 1. ``apt update && apt install bind9 dnsutils -y``
 2. ``cd /etc/bind``
 3. ``nano named.conf.local``
@@ -154,7 +154,7 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
 
 ## Soal 3
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
-#### Masuk ke console Sriwijaya
+#### Console Sriwijaya
 1. ``cd /etc/bind``
 2. ``nano named.conf.local``
     ```
@@ -167,8 +167,8 @@ Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibut
       type master;
       file "/etc/bind/it38/pasopati.it38.com";
     };
-3. cd it38
-4. nano pasopati.it38.com
+3. ``cd it38``
+4. ``nano pasopati.it38.com``
     ```
     ;
     ; BIND data file for local loopback interface
@@ -185,13 +185,13 @@ Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibut
     @       IN      A       10.82.2.5
     @       IN      AAAA    ::1
     www     IN      CNAME   pasopati.it38.com.
-5. service bind9 restart
-6. ping pasopati.it38.com <br>
+5. ``service bind9 restart``
+6. ``ping pasopati.it38.com`` <br>
    ![image](https://github.com/user-attachments/assets/db2facc1-e19d-4b43-b68d-89f60cfeab33)
 
 ## Soal 4
 Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
-#### Masuk ke console Sriwijaya
+#### Console Sriwijaya
 1. ``cd /etc/bind``
 2. ``nano named.conf.local``
     ```
@@ -209,8 +209,8 @@ Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataa
       type master;
       file "/etc/bind/it38/rujapala.it38.com";
     };
-3. cd it38
-4. nano rujapala.it38.com
+3. ``cd it38``
+4. ``nano rujapala.it38.com``
     ```
     ;
     ; BIND data file for local loopback interface
@@ -227,21 +227,120 @@ Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataa
     @       IN      A       10.82.2.3
     @       IN      AAAA    ::1
     www     IN      CNAME   rujapala.it38.com.
-5. service bind9 restart
-6. ping rujapala.it38.com <br>
+5. ``service bind9 restart``
+6. ``ping rujapala.it38.com`` <br>
 ![image](https://github.com/user-attachments/assets/96c27360-9961-4e28-8926-a5c78d72324a)
 
 ## Soal 5
 Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
+#### Console Albert Einstein
+1. ``ping www.sudarsana.it38.com``
+2. ``ping www.pasopati.it27.com``
+3. ``ping.www.rujapala.it27.com``
+![image](https://github.com/user-attachments/assets/26165bf3-e3f2-4fe6-b4a3-b23eec8e2731)
+![image](https://github.com/user-attachments/assets/db2facc1-e19d-4b43-b68d-89f60cfeab33)
+![image](https://github.com/user-attachments/assets/96c27360-9961-4e28-8926-a5c78d72324a)
 
 ## Soal 6
 Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
+#### Console Sriwijaya
+1. ``cd /etc/bind``
+2. ``nano named.conf.local``
+   ```
+   zone "2.82.10.in-addr.arpa" {
+      type master;
+      file "/etc/bind/it38/2.82.10.in-addr.arpa";
+    };
+3. ``cd it38``
+4. ``nano 2.82.10.in-addr.arpa``
+    ```
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     pasopati.it38.com. root.pasopati.it38.com. (
+                                  2         ; Serial
+                             604800         ; Refresh
+                              86400         ; Retry
+                            2419200         ; Expire
+                             604800 )       ; Negative Cache TTL
+    ;
+    2.82.10.in-addr.arpa    IN    NS    pasopati.it38.com.
+    4                       IN    PTR   pasopati.it38.com.
+5. ``service bind9 restart``
+
+#### Console Albert Einstein
+6. ``apt install dnsutils -y``
+7. ``host -t PTR 10.82.2.5``
+![image](https://github.com/user-attachments/assets/acbae1a8-25d4-4a08-a6e2-6c6468132554)
 
 ## Soal 7
 Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
+#### Console Majapahit
+1. ``apt install bind9 dnsutils -y``
+2. ``cd /etc/bind``
+3. ``nano named.conf.local``
+    ```
+    zone "sudarsana.it38.com" {
+            type slave;
+            masters {10.82.1.2;};
+            file "/var/lib/bind/it38/sudarsana.it38.com";
+    };
+    
+    zone "pasopati.it38.com" {
+            type slave;
+            masters {10.82.1.2;};
+            file "/var/lib/bind/it38/pasopati.it38.com";
+    };
+    
+    zone "rujapala.it38.com" {
+            type slave;
+            masters {10.82.1.2;};
+            file "/var/lib/bind/it38/rujapala.it38.com";
+    };
+    
+    zone "2.82.10.in-addr.arpa" {
+            type slave;
+            masters {10.82.1.2;};
+            file "/var/lib/bind/it38/2.82.10.in-addr.arpa";
+    };
+4. ``service bind9 restart``
+
+#### Console Albert Einstein
+5. ``Masukan nameserver DNS slavenya nameserver IP Majapahit di /etc/resolv.conf``
+
+#### Console Majapahit
+6. ``service bind9 stop``
+
+#### Console Albert Einstein
+7. ``ping sudarsana.it38.com``
+![image](https://github.com/user-attachments/assets/96c27360-9961-4e28-8926-a5c78d72324a)
 
 ## Soal 8
 Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
+#### Console Sriwijaya
+1. ``cd /etc/bind/it38``
+2. ``nano sudarsana.it38.com``
+   ```
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     sudarsana.it38.com. root.sudarsana.it38.com. (
+                                  2         ; Serial
+                             604800         ; Refresh
+                              86400         ; Retry
+                            2419200         ; Expire
+                             604800 )       ; Negative Cache TTL
+    ;
+    @       IN      NS      sudarsana.it38.com.
+    @       IN      A       10.82.3.4
+    @       IN      AAAA    ::1
+    www     IN      CNAME   sudarsana.it38.com.
+    cakra   IN      A       10.82.2.4
+#### Console Albert Einstein
+3. ``ping cakra.sudarsana.it38.com``
+![image](https://github.com/user-attachments/assets/c7a3b435-a7d8-456d-8a7a-07e44402b19e)
 
 ## Soal 9
 Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
