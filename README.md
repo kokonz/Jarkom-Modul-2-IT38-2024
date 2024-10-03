@@ -493,7 +493,7 @@ Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi 
 Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
 #### Console Solok
 1. ``apt-get update && apt-get install apache2 -y``
-2. ``a2enmod proxy a2enmod proxy_balancer a2enmod proxy_http a2enmod lbmethod_byrequests``
+2. ``a2enmod proxy proxy_balancer proxy_http lbmethod_byrequests lbmethod_bytraffic lbmethod_bybusyness rewrite``
 3. ``nano /etc/apache2/sites-available/000-default.conf``
     ```
    <VirtualHost *:80>
@@ -512,12 +512,11 @@ Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak u
         CustomLog ${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
 4. ``service apache2 restart``
-5. ``lynx http://10.82.3.4`` <br>
+5. ``lynx http://localhost`` <br>
 ![image](https://github.com/user-attachments/assets/444a440a-cfc3-401e-abb3-d50451d8548a)
 
 ## Soal 14
 Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
-
 
 ## Soal 15
 Markas pusat meminta laporan hasil benchmark dengan menggunakan apache benchmark dari load balancer dengan 2 web server yang berbeda tersebut dan meminta secara detail dengan ketentuan:
