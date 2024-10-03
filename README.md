@@ -463,9 +463,35 @@ Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan m
 
 ## Soal 12
 Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
+#### Console Kotalingga
+1. ``apt-get update && apt-get install apache2 libapache2-mod-php7.0 php php-mcrypt php-mysql-y wget unzip lynx``
+2. ``cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pasopati.it38.com.conf``
+3. ``nano /etc/apache2/mods-enabled/dir.conf`` <br>
+    ```
+    <IfModule mod_dir.c>
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+    </IfModule>'
+4. ``nano /etc/apache2/sites-available/it22.conf``
+    ```
+   <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/it38
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>'
+5. ``a2ensite it38``
+6. ``mkdir -p /var/www/it38``
+7. ``wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1xn03kTB27K872cokqwEIlk8Zb121HnfB' -O /tmp/lb.zip``
+8. ``unzip -o /tmp/lb.zip -d /tmp``
+9. ``mv /tmp/worker/* /var/www/it38/ -f``
+10. ``a2dissite 000-default.conf``
+11. ``service apache2 restart``
+12. ``lynx http://localhost`` <br>
+![image](https://github.com/user-attachments/assets/6f0ed969-c592-4446-b032-0964cbcf1c29)
 
 ## Soal 13
 Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
+
 
 ## Soal 14
 Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
