@@ -501,9 +501,9 @@ Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak u
         DocumentRoot /var/www/it38
     
         <Proxy "balancer://mycluster">
-            BalancerMember http://<IP_Kotalingga> loadfactor=1
-            BalancerMember http://<IP_Bedahulu> loadfactor=1
-            BalancerMember http://<IP_Tanjungkulai> loadfactor=1
+            BalancerMember http://10.82.2.5 loadfactor=1
+            BalancerMember http://10.82.2.4 loadfactor=1
+            BalancerMember http://10.82.2.3 loadfactor=1
         </Proxy>
     
         ProxyPass "/" "balancer://mycluster/"
