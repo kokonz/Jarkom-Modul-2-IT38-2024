@@ -464,7 +464,7 @@ Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan m
 ## Soal 12
 Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
 #### Console Kotalingga
-1. ``apt-get update && apt-get install apache2 libapache2-mod-php7.0 php php-mcrypt php-mysql-y wget unzip lynx``
+1. ``apt-get update && apt-get install apache2 libapache2-mod-php7.0 php php-mcrypt php-mysql wget unzip lynx -y``
 2. ``cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pasopati.it38.com.conf``
 3. ``nano /etc/apache2/mods-enabled/dir.conf`` <br>
     ```
@@ -491,10 +491,33 @@ Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi 
 
 ## Soal 13
 Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
-
+#### Console Solok
+1. ``apt-get update && apt-get install apache2 -y``
+2. ``a2enmod proxy a2enmod proxy_balancer a2enmod proxy_http a2enmod lbmethod_byrequests``
+3. ``nano /etc/apache2/sites-available/000-default.conf``
+    ```
+   <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/it38
+    
+        <Proxy "balancer://mycluster">
+            BalancerMember http://<IP_Kotalingga> loadfactor=1
+            BalancerMember http://<IP_Bedahulu> loadfactor=1
+            BalancerMember http://<IP_Tanjungkulai> loadfactor=1
+        </Proxy>
+    
+        ProxyPass "/" "balancer://mycluster/"
+        ProxyPassReverse "/" "balancer://mycluster/"
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+4. ``service apache2 restart``
+5. ``lynx http://10.82.3.4`` <br>
+![image](https://github.com/user-attachments/assets/444a440a-cfc3-401e-abb3-d50451d8548a)
 
 ## Soal 14
 Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
+
 
 ## Soal 15
 Markas pusat meminta laporan hasil benchmark dengan menggunakan apache benchmark dari load balancer dengan 2 web server yang berbeda tersebut dan meminta secara detail dengan ketentuan:
