@@ -8,11 +8,114 @@
 ## Topologi Kelompok IT38 (2)
 ![image](https://github.com/user-attachments/assets/7a25912d-792d-476d-bc68-7a9baf9f870b)
 
-## Soal:
+# Soal
 Sebuah kerajaan besar di Indonesia sedang mengalami pertempuran dengan penjajah. Kerajaan tersebut adalah Sriwijaya. Karena merasa terdesak Sriwijaya meminta bantuan pada Majapahit untuk mempertahankan wilayahnya. Pertempuran besar tersebut berada di Nusantara. Untuk topologi lihat pada link ini.
 
 ## Soal 1
 Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
+
+    Nusantara
+    auto eth0
+    iface eth0 inet dhcp
+    
+    auto eth1
+    iface eth1 inet static
+      address 10.82.1.1
+      netmask 255.255.255.0
+    
+    auto eth2  
+    iface eth2 inet static
+      address 10.82.2.1
+      netmask 255.255.255.0
+    
+    auto eth3
+    iface eth3 inet static
+       address 10.82.3.1
+       netmask 255.255.255.0
+    
+    up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.82.0.0/16
+
+    
+    Sriwijaya
+    auto eth0
+    iface eth0 inet static
+      address 10.82.1.2
+      netmask 255.255.255.0
+      gateway 10.82.1.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Albert Einstein
+    auto eth0
+    iface eth0 inet static
+      address 10.82.2.2
+      netmask 255.255.255.0
+      gateway 10.82.2.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+      up echo nameserver 10.82.1.2 > /etc/resolv.conf
+    
+    
+    Tanjungkulai
+    auto eth0 
+    iface eth0 inet static 
+      address 10.82.2.3
+      netmask 255.255.255.0
+      gateway 10.82.2.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Bedahulu
+    auto eth0
+    iface eth0 inet static
+      address 10.82.2.4
+      netmask 255.255.255.0
+      gateway 10.82.2.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Kotalingga
+    auto eth0
+    iface eth0 inet static
+      address 10.82.2.5
+      netmask 255.255.255.0
+      gateway 10.82.2.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Majapahit
+    auto eth0 
+    iface eth0 inet static 
+      address 10.82.3.2
+      netmask 255.255.255.0
+      gateway 10.82.3.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Hayamwuruk
+    auto eth0
+    iface eth0 inet static
+      address 10.82.3.3
+      netmask 255.255.255.0
+      gateway 10.82.3.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Solok
+    auto eth0
+    iface eth0 inet static
+      address 10.82.3.4
+      netmask 255.255.255.0
+      gateway 10.82.3.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
+    
+    
+    Srikandi
+    auto eth0
+    iface eth0 inet static
+      address 10.82.3.5
+      netmask 255.255.255.0
+      gateway 10.82.3.1
+      up echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 ## Soal 2
 Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
